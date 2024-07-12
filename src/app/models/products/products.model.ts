@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import { TProduct } from "./products.interface";
 
-const ProductSchema = new Schema<TProduct>({
+const productSchema = new Schema<TProduct>({
     category: {
       type: String,
       required: true,
@@ -33,6 +33,6 @@ const ProductSchema = new Schema<TProduct>({
   });
   
   // Create the Product model
-  const Product = mongoose.model<TProduct>('Product', ProductSchema);
+  const Product = mongoose.model<TProduct>('Product', productSchema);
   
   export default Product;
