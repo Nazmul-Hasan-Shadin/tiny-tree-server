@@ -11,25 +11,51 @@ export  class QueryBuilder<T> {
   search(productSearchableField: string[]) {
 
     const searchTerm = this.query?.searchTerm;
-    console.log('mal',searchTerm);
+    const category = this.query?.category;
+
+    const priceRange = this.query?.priceRange;
+
+    let searchCriteria: FilterQuery<T> = {};
     
     if (searchTerm) {
-        this.modelQuery = this.modelQuery.find({
-          $or: productSearchableField.map(
-            (field) =>
-              ({
-                [field]: { $regex: searchTerm, $options: 'i' },
-              } as FilterQuery<T>)
+      searchCriteria = {
+        $or: productSearchableField.map(
+          (field) =>
+            ({
+              [field]: { $regex: searchTerm, $options: 'i' },
+            } as FilterQuery<T>)
         ),
-      });
+      };
     }
+
+    if (category) {
+      searchCriteria = {
+        ...searchCriteria,
+        category: { $regex: category, $options: 'i' },
+      };
+    }
+
+    if (priceRange) {
+      const [min, max] = (priceRange as string).split('-').map(Number);
+      searchCriteria = {
+        ...searchCriteria,
+        price: { $gte: min, $lte: max },
+      };
+    } 
+
+    this.modelQuery = this.modelQuery.find(searchCriteria);
+
+
+
     return this;
   }
 
   filter() {
     const queryObj = { ...this.query };
 
-    const excludes = ["searchTerm", "sort", "limit", "page"];
+    const excludes = ["searchTerm", "sort", "limit", "page","category","priceRange"];
+       
+
 
     excludes.forEach((el) => delete queryObj[el]);
 
@@ -44,5 +70,11 @@ export  class QueryBuilder<T> {
 
     this.modelQuery = this.modelQuery.skip(skip).limit(limit);
     return this;
+  }
+
+  sort(){
+    const sort= (this.query.sort as string)?.split(',').join(' ') ||'-createdAt';
+     this.modelQuery=this.modelQuery.sort(sort as string);
+     return this;
   }
 }
