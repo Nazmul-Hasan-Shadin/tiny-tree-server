@@ -31,10 +31,16 @@ const getAllProductFromDb = async (query: Record<string, unknown>) => {
   const result = await productQuery.modelQuery;
   return result;
 };
+const getSingleProductFromDbById = async (id:string) => {
+  const result= await Product.findById(id)
+  return result;
+};
+
 
 export const ProductServices = {
   createProductIntoDb,
   updateProductIntoDb,
   deleteProductIntoDb,
   getAllProductFromDb,
+  getSingleProductFromDbById
 };

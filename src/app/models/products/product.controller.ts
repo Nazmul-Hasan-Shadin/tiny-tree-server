@@ -31,6 +31,17 @@ const updateroduct = catchAsync(async (req, res) => {
   });
 });
 
+const getSingleProduct = catchAsync(async (req, res) => {
+  const result = await ProductServices.getSingleProductFromDbById(req?.params.id);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "  Product fetched   Successful",
+    data: result,
+  });
+});
+
 const getAllProduct = catchAsync(async (req, res) => {
   const result = await ProductServices.getAllProductFromDb(req?.query);
 
@@ -58,4 +69,5 @@ export const ProductController = {
   updateroduct,
   deleteProductIntoDb,
   getAllProduct,
+  getSingleProduct
 };
