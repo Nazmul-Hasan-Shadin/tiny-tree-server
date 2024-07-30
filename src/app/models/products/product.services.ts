@@ -31,6 +31,30 @@ const getAllProductFromDb = async (query: Record<string, unknown>) => {
   const result = await productQuery.modelQuery;
   return result;
 };
+const updateProductQuantityIntoDb = async (productData:any) => {
+  console.log('inside of update prodcut quantity', productData);
+  
+    const updatedProducts= []
+   for(const product of productData){
+     const updateQuantity= await Product.findByIdAndUpdate(product._id, 
+       {quantity:product.quantity}
+     )
+
+      console.log(updateQuantity);
+      
+     if (updateQuantity) {
+      updatedProducts.push(updateQuantity);
+    }
+   }
+
+   console.log(updatedProducts);
+   
+   
+  
+  return updatedProducts;
+};
+
+
 const getSingleProductFromDbById = async (id:string) => {
   const result= await Product.findById(id)
   return result;
@@ -42,5 +66,6 @@ export const ProductServices = {
   updateProductIntoDb,
   deleteProductIntoDb,
   getAllProductFromDb,
-  getSingleProductFromDbById
+  getSingleProductFromDbById,
+  updateProductQuantityIntoDb
 };

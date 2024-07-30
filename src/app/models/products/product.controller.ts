@@ -53,6 +53,20 @@ const getAllProduct = catchAsync(async (req, res) => {
   });
 });
 
+const updatePdoductQuantity = catchAsync(async (req, res) => {
+
+  
+  const result = await ProductServices.updateProductQuantityIntoDb(req.body);
+
+  sendResponse(res, {
+    success: true,
+    statusCode: 200,
+    message: "Quantity updated succesfully",
+    data: result,
+  });
+});
+
+
 const deleteProductIntoDb = catchAsync(async (req, res) => {
   const result = await ProductServices.deleteProductIntoDb(req.params.id);
 
@@ -69,5 +83,6 @@ export const ProductController = {
   updateroduct,
   deleteProductIntoDb,
   getAllProduct,
-  getSingleProduct
+  getSingleProduct,
+  updatePdoductQuantity
 };

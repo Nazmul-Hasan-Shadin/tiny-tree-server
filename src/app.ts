@@ -19,5 +19,10 @@ app.use('/api/v1/payment',PaymentRoutes)
 app.use('/api/v1',OrderRoutes)
 app.use(globalErrorMiddleware)
 
+ 
+app.get('/',(req,res)=>{
+ res.send('server is running')
+})
+
 
 export default app

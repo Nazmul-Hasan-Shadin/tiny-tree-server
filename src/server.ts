@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import app from "./app";
 import config from "./app/config";
+import { createServer } from "http";
+import { Server } from "socket.io";
 
 async function main() {
   await mongoose.connect(
@@ -9,7 +11,33 @@ async function main() {
     }
   );
 
-  app.listen(3000, () => {
+  const server= createServer(app)
+
+   const io= new Server(server,{
+    cors:{
+      origin:"http://localhost:5173",
+      methods:["GET","POST"]
+    }
+   })
+
+
+  io.on('connection',(socket)=>{
+    console.log('A user is connected');
+    // receive a message and response
+
+    socket.on('message',(msg)=>{
+      io.emit('message',msg)
+    })
+
+    socket.on('disconnect',()=>{
+      console.log('user is disconnected');
+      
+    })
+    
+  })
+
+
+  server.listen(3000, () => {
     console.log("Server is running ");
   });
 }
