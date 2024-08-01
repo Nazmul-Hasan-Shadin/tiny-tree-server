@@ -9,7 +9,7 @@ import { CategoriesRoutes } from './app/models/categories/categories.route'
 const app= express()
 
 app.use(cors({
-    origin:'http://localhost:5173'
+    origin:['https://tiny-tree.vercel.app','http://localhost:5173']
 }))
 app.use(express.json())
 

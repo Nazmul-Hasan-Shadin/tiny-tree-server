@@ -7,14 +7,14 @@ const createProductIntoDb = async (payload: TProduct) => {
   return result;
 };
 
-const updateProductIntoDb = async (id, payload: Partial<TProduct>) => {
+const updateProductIntoDb = async (id:string,payload: Partial<TProduct>) => {
   const result = await Product.findByIdAndUpdate(id, payload, {
     runValidators: true,
   });
   return result;
 };
 
-const deleteProductIntoDb = async (id) => {
+const deleteProductIntoDb = async (id:string) => {
   const result = await Product.findByIdAndDelete(id);
   return result;
 };
