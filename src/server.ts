@@ -17,7 +17,7 @@ async function main() {
 
   const io = new Server(server, {
     cors: {
-      origin: ["https://tiny-tree.vercel.app",'http://localhost:5173'],
+      origin: ["https://tiny-tree.vercel.app",'http://localhost:5173,https://66ace848fa36554d9bc7d27d--exquisite-tulumba-3a5023.netlify.app'],
       methods: ["GET", "POST"],
       credentials: true,
       
